@@ -1,0 +1,13 @@
+.list__container{
+  display: flex;
+  flex-direction: row;
+}
+
+.movie__container {
+  display: flex;
+  // align-items: center;
+
+  img{
+    justify-content: space-between;
+  }
+}
