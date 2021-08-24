@@ -1,13 +1,41 @@
 .list__container{
   display: flex;
-  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  padding: 20px;
+  gap: 20px;
 }
 
 .movie__container {
-  display: flex;
-  // align-items: center;
-
+  // display: flex;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s;
+  justify-content: flex-start;
   img{
     justify-content: space-between;
+  }
+  
+  .overlay{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    background: rgba(0,0,0,0.8);
+    // background: white;
+    width: 100%;
+    transition: 0.5s ease;
+    opacity: 0;
+    bottom: 0;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  &:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    .overlay{
+      opacity: 1;
+    }
   }
 }

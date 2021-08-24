@@ -8,6 +8,7 @@ const MovieList = ({ movies, query }) => {
         return (
         <div className='movie__container'> 
           <img src={movie.Poster} alt={movie.Title}/>
+          <div className="overlay"></div>
         </div>
         )
       })}
