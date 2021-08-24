@@ -4,11 +4,14 @@ import './App.scss';
 import MovieList from './components/MovieList';
 import MovieListHeading from './components/MovieListHeading'
 import SearchBox from './components/SearchBox';
+import AddFavorite from './components/AddFavorite';
+import RemoveFavorites from './components/RemoveFavorites';
 
 function App() {
-  const API_KEY = process.env.REACT_APP_API_KEY; //REACT_APP_API_KEY=a83850fc
+  const API_KEY = process.env.REACT_APP_API_KEY; 
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState('');
+  const [favorites, setFavorites] = useState([]);
 
   const getMovieRequest = (query) => {
     const url = `http://www.omdbapi.com/?s=${query}&apikey=${API_KEY}`;
@@ -21,9 +24,30 @@ function App() {
     .catch(err => console.log('Something went wrong! ' + err))
   }
 
+  const addFavoriteMovie = (movie) => {
+    const newFavoriteList = [...favorites, movie];
+    setFavorites(newFavoriteList);
+    saveToLocalStorage(newFavoriteList);
+  }
+  
+  const removeFavoriteMovie = (movie) => {
+    const newFavoriteList = favorites.filter(favorite => favorite.imdbID !== movie.imdbID);
+    setFavorites(newFavoriteList);
+    saveToLocalStorage(newFavoriteList);
+  }
+
   useEffect(() => {
     getMovieRequest(query);
   }, [query])
+
+  useEffect(() => {
+    const movieFavorites = JSON.parse(localStorage.getItem('react-movie-app-favorites'));
+    setFavorites(movieFavorites)
+  },[])
+
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem('react-movie-app-favorites', JSON.stringify(items))
+  }
 
   return (
     <div className="App">
@@ -32,7 +56,21 @@ function App() {
         <SearchBox query={query} setQuery={setQuery}/>
       </div>
       <div className="row">
-        <MovieList movies={movies} query={query}/> 
+        <MovieList 
+          movies={movies} 
+          handleFavoritesClick={addFavoriteMovie} 
+          favoriteComponent={AddFavorite}
+          /> 
+      </div>
+      <div className="favorite__heading">
+        <MovieListHeading heading="Favorites"/>
+      </div>
+      <div className="row">
+        <MovieList 
+          movies={favorites} 
+          handleFavoritesClick={removeFavoriteMovie} 
+          favoriteComponent={RemoveFavorites}
+          /> 
       </div>
     </div>
   );
