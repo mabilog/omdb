@@ -41,8 +41,9 @@ function App() {
   }, [query])
 
   useEffect(() => {
-    const movieFavorites = JSON.parse(localStorage.getItem('react-movie-app-favorites'));
-    setFavorites(movieFavorites)
+    if(localStorage.getItem('react-movie-app-favorites')) setFavorites(JSON.parse(localStorage.getItem('react-movie-app-favorites')))
+    // const movieFavorites = JSON.parse(localStorage.getItem('react-movie-app-favorites'));
+    else setFavorites([])
   },[])
 
   const saveToLocalStorage = (items) => {
