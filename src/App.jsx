@@ -7,8 +7,11 @@ import SearchBox from './components/SearchBox';
 import AddFavorite from './components/AddFavorite';
 import RemoveFavorites from './components/RemoveFavorites';
 
+require('dotenv').config();
+
 function App() {
-  const API_KEY = process.env.REACT_APP_API_KEY; 
+  const API_KEY = process.env.API_KEY; 
+  // console.log(process.env)
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState('');
   const [favorites, setFavorites] = useState([]);
